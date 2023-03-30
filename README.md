@@ -36,6 +36,6 @@ in the `config/bundles.php` file of your project:
 
 return [
     // ...
-    Goksagun\SymfonyExtraBundle\GoksagunSymfonyExtraBundle::class => ['all' => true],
+    Goksagun\FrameworkExtraBundle\GoksagunFrameworkExtraBundle::class => ['all' => true],
 ];
 ```

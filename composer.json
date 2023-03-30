@@ -1,0 +1,43 @@
+{
+    "name": "goksagun/framework-extra-bundle",
+    "description": "Symfony extra bundle provides a set of useful tools to make easy and rapid development",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "symfony extra bundle"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Goksagun\\FrameworkExtraBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Goksagun\\FrameworkExtraBundle\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Burak Bolat",
+            "email": "brkblt@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2",
+        "symfony/framework-bundle": "*",
+        "symfony/http-foundation": "*",
+        "symfony/http-kernel": "*",
+        "symfony/monolog-bundle": "*",
+        "symfony/monolog-bridge": "*",
+        "symfony/serializer": "*",
+        "symfony/validator": "*",
+        "doctrine/annotations": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
