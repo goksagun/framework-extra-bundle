@@ -1,3 +1,7 @@
+## 0.1.1 (March 31, 2023)
+  - Add argument value resolver priority
+  - Fix composer keywords
+
 ## 0.1.0 (March 31, 2023)
   - Add CRUD http methods and argument resolvers
   - Add README.md file
