@@ -19,16 +19,17 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services
         ->set(BodyValueResolver::class)
         ->arg('$serializer', service('serializer'))
-        ->tag('controller.argument_value_resolver');
+        ->call('setLogger', [service('logger')])
+        ->tag('controller.argument_value_resolver', ['priority' => 150]);
 
     $services
         ->set(HeadersParamValueResolver::class)
         ->parent(AbstractParamResolver::class)
-        ->tag('controller.argument_value_resolver')
+        ->tag('controller.argument_value_resolver', ['priority' => 150])
         ->set(QueryParamValueResolver::class)
         ->parent(AbstractParamResolver::class)
-        ->tag('controller.argument_value_resolver')
+        ->tag('controller.argument_value_resolver', ['priority' => 150])
         ->set(RequestParamValueResolver::class)
         ->parent(AbstractParamResolver::class)
-        ->tag('controller.argument_value_resolver');
+        ->tag('controller.argument_value_resolver', ['priority' => 150]);
 };
