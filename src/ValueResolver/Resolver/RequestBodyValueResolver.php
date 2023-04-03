@@ -49,7 +49,7 @@ class RequestBodyValueResolver implements ValueResolverInterface, LoggerAwareInt
 
         $this->logger->debug("The request format: '" . $format . "'");
 
-        yield $this->getData($request, $type, $format);
+        yield $this->getRequestContentData($request, $type, $format);
     }
 
     private function getRequestData(Request $request, Scope $scope, string $type)
@@ -63,7 +63,7 @@ class RequestBodyValueResolver implements ValueResolverInterface, LoggerAwareInt
         return $data;
     }
 
-    private function getData(Request $request, ?string $type, ?string $format): mixed
+    private function getRequestContentData(Request $request, ?string $type, ?string $format): mixed
     {
         $content = $request->getContent();
 
@@ -84,7 +84,7 @@ class RequestBodyValueResolver implements ValueResolverInterface, LoggerAwareInt
                 $this->logger->debug("Deserialized data: {0}", [$data]);
                 break;
         }
-        
+
         return $data;
     }
 }
