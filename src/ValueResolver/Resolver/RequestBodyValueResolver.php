@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Goksagun\FrameworkExtraBundle\ValueResolver\Resolver;
 
-use Goksagun\FrameworkExtraBundle\ValueResolver\Annotation\BodyValue;
+use Goksagun\FrameworkExtraBundle\ValueResolver\Annotation\RequestBody;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
+class RequestBodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -25,7 +25,7 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ([] === $argument->getAttributes(BodyValue::class)) {
+        if ([] === $argument->getAttributes(RequestBody::class)) {
             return [];
         }
 

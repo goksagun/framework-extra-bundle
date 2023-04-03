@@ -3,7 +3,7 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\AbstractParamResolver;
-use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\BodyValueResolver;
+use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\RequestBodyValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\HeadersParamValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\QueryParamValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\RequestParamValueResolver;
@@ -17,7 +17,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->call('setLogger', [service('logger')]);
 
     $services
-        ->set(BodyValueResolver::class)
+        ->set(RequestBodyValueResolver::class)
         ->arg('$serializer', service('serializer'))
         ->call('setLogger', [service('logger')])
         ->tag('controller.argument_value_resolver', ['priority' => 150]);
