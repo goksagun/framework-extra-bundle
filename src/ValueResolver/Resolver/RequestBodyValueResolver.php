@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Goksagun\FrameworkExtraBundle\ValueResolver\Resolver;
 
-use Goksagun\FrameworkExtraBundle\ValueResolver\Annotation\BodyValue;
+use Goksagun\FrameworkExtraBundle\Config\Scope;
+use Goksagun\FrameworkExtraBundle\ValueResolver\Annotation\RequestBody;
+use Goksagun\FrameworkExtraBundle\ValueResolver\Fetcher\ArgumentFetcherFactory;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
+class RequestBodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -25,7 +28,7 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ([] === $argument->getAttributes(BodyValue::class)) {
+        if ([] === $attrs = $argument->getAttributes(RequestBody::class)) {
             return [];
         }
 
@@ -33,14 +36,34 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
 
         $this->logger->debug("The argument type: '" . $type . "'");
 
+        /** @var RequestBody $attr */
+        $attr = $attrs[0];
+
+        if (null !== $scope = $attr->getScope()) {
+            yield $this->getRequestData($request, $scope, $type);
+
+            return [];
+        }
+
         $format = $request->getContentTypeFormat();
 
         $this->logger->debug("The request format: '" . $format . "'");
 
-        yield $this->getData($request, $type, $format);
+        yield $this->getRequestContentData($request, $type, $format);
     }
 
-    private function getData(Request $request, ?string $type, ?string $format): mixed
+    private function getRequestData(Request $request, Scope $scope, string $type)
+    {
+        $normalizer = new ObjectNormalizer();
+
+        $data = $normalizer->denormalize(ArgumentFetcherFactory::create($request, $scope)->fetchAll(), $type, 'array');
+
+        $this->logger->debug("Denormalized data: {0}", [$data]);
+
+        return $data;
+    }
+
+    private function getRequestContentData(Request $request, ?string $type, ?string $format): mixed
     {
         $content = $request->getContent();
 
@@ -61,7 +84,7 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
                 $this->logger->debug("Deserialized data: {0}", [$data]);
                 break;
         }
-        
+
         return $data;
     }
 }

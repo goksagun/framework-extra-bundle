@@ -20,4 +20,9 @@ class HeadersArgumentFetcher extends AbstractFetcher
         // convert camelCase to Title-Kebab-Case
         return ucwords(preg_replace('/(?<=\\w)(?=[A-Z])/', '-', $input));
     }
+
+    public function fetchAll(): mixed
+    {
+        return $this->request->{$this->scope->value}->all();
+    }
 }
