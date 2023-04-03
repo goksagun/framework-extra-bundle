@@ -9,4 +9,9 @@ class DefaultArgumentFetcher extends AbstractFetcher
     {
         return $this->request->{$this->scope->value}->get($name);
     }
+
+    public function fetchAll(): mixed
+    {
+        return $this->request->{$this->scope->value}->all();
+    }
 }
