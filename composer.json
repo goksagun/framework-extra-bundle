@@ -28,14 +28,17 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
+        "doctrine/annotations": "*",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "*",
+        "symfony/clock": "*",
         "symfony/framework-bundle": "*",
         "symfony/http-foundation": "*",
         "symfony/http-kernel": "*",
-        "symfony/monolog-bundle": "*",
         "symfony/monolog-bridge": "*",
+        "symfony/monolog-bundle": "*",
         "symfony/serializer": "*",
-        "symfony/validator": "*",
-        "doctrine/annotations": "*"
+        "symfony/validator": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
