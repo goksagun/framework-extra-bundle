@@ -2,14 +2,25 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Doctrine\ORM\Events;
+use Goksagun\FrameworkExtraBundle\EventListener\CreationTimestampListener;
+use Goksagun\FrameworkExtraBundle\EventListener\UpdateTimestampListener;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\AbstractParamResolver;
-use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\RequestBodyValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\HeadersParamValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\QueryParamValueResolver;
+use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\RequestBodyValueResolver;
 use Goksagun\FrameworkExtraBundle\ValueResolver\Resolver\RequestParamValueResolver;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(CreationTimestampListener::class)
+        ->tag('doctrine.event_listener', ['event' => Events::prePersist]);
+
+    $services
+        ->set(UpdateTimestampListener::class)
+        ->tag('doctrine.event_listener', ['event' => Events::preUpdate]);
 
     $services
         ->set(AbstractParamResolver::class)
