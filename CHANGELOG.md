@@ -1,3 +1,6 @@
+## 0.3.0 (June 27, 2023)
+  - Implement creation and update timestamp attributes
+
 ## 0.2.0 (April 04, 2023)
   - Rename getData to getRequestContent for better readability
   - Extend RequestBodyValueResolver to resolve all scopes
