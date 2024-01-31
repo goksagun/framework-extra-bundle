@@ -1,3 +1,8 @@
+## 0.3.1 (January 31, 2024)
+  - Migrate phpunit.xml.dist file
+  - Clean up ignored files
+  - Add composer.lock to gitignore
+
 ## 0.3.0 (June 27, 2023)
   - Implement creation and update timestamp attributes
 
